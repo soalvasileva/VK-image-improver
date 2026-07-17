@@ -21,7 +21,7 @@ http://localhost:8000
 ## Структура проекта
 
 ```text
-image-enhancer/
+VK-image-improver/
 ├── index.html          # разметка страницы
 ├── style.css           # оформление интерфейса
 ├── app.js              # интерфейс и API задач
