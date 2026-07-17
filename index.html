@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="description"
+        content="Коррекция яркости, контраста и насыщенности изображения прямо в браузере."
+    >
+    <title>Коррекция фото</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container">
+        <header class="page-header">
+            <h1>Улучшение изображения с помощью ИИ</h1>
+            <p class="description">
+                Загрузите снимок — модель подберёт яркость, контраст и насыщенность.
+                Результат можно скорректировать вручную.
+            </p>
+        </header>
+
+        <section class="card upload-card" aria-labelledby="uploadTitle">
+            <div class="section-heading">
+                <div>
+                    <h2 id="uploadTitle">Выберите файл</h2>
+                    <p>Поддерживаются JPG, PNG, BMP и HEIC до 15 Мп.</p>
+                </div>
+            </div>
+
+            <label class="file-picker" for="imageInput">
+                <span class="button secondary">Выбрать изображение</span>
+                <span id="selectedFileName" class="selected-file">Файл не выбран</span>
+            </label>
+
+            <input
+                id="imageInput"
+                class="visually-hidden"
+                type="file"
+                accept=".jpg,.jpeg,.png,.bmp,.heic,image/jpeg,image/png,image/bmp,image/heic"
+            >
+        </section>
+
+        <p id="message" class="message hidden" aria-live="polite"></p>
+
+        <section id="imageSection" class="card hidden" aria-labelledby="previewTitle">
+            <div class="section-heading image-info">
+                <div>
+                    <h2 id="previewTitle">Предпросмотр</h2>
+                    <p id="fileName"></p>
+                </div>
+                <span id="imageSize" class="image-size"></span>
+            </div>
+
+            <div class="comparison">
+                <figure>
+                    <div class="image-frame">
+                        <img id="originalPreview" alt="Исходное изображение">
+                    </div>
+                    <figcaption>До обработки</figcaption>
+                </figure>
+
+                <figure id="resultFigure" class="hidden">
+                    <div class="image-frame">
+                        <img id="resultPreview" alt="Обработанное изображение">
+                    </div>
+                    <figcaption>После обработки</figcaption>
+                </figure>
+            </div>
+
+            <div class="actions">
+                <button id="processButton" class="button primary" type="button" disabled>
+                    Подобрать настройки
+                </button>
+            </div>
+        </section>
+
+        <section id="progressSection" class="card progress-card hidden" aria-live="polite">
+            <div class="progress-header">
+                <span id="statusText">Подготовка</span>
+                <strong id="progressValue">0%</strong>
+            </div>
+            <progress id="progressBar" value="0" max="100"></progress>
+            <button id="cancelButton" class="button text-button hidden" type="button">
+                Отменить обработку
+            </button>
+        </section>
+
+        <section id="parametersSection" class="card hidden" aria-labelledby="settingsTitle">
+            <div class="section-heading">
+                <div>
+                    <h2 id="settingsTitle">Настройки изображения</h2>
+                    <p>Сначала показаны значения, которые предложила модель.</p>
+                </div>
+            </div>
+
+            <div class="model-values" aria-label="Параметры модели">
+                <div>
+                    <span>Яркость</span>
+                    <strong id="brightnessValue">100%</strong>
+                </div>
+                <div>
+                    <span>Контраст</span>
+                    <strong id="contrastValue">100%</strong>
+                </div>
+                <div>
+                    <span>Насыщенность</span>
+                    <strong id="saturationValue">100%</strong>
+                </div>
+            </div>
+
+            <div class="manual-settings">
+                <div class="manual-heading">
+                    <div>
+                        <h3>Ручная настройка</h3>
+                        <p>Измените значения и нажмите «Применить».</p>
+                    </div>
+                </div>
+
+                <div class="slider-row">
+                    <label for="brightnessRange">Яркость</label>
+                    <input id="brightnessRange" type="range" min="45" max="170" value="100" step="1">
+                    <output id="brightnessRangeValue" for="brightnessRange">100%</output>
+                </div>
+
+                <div class="slider-row">
+                    <label for="contrastRange">Контраст</label>
+                    <input id="contrastRange" type="range" min="50" max="170" value="100" step="1">
+                    <output id="contrastRangeValue" for="contrastRange">100%</output>
+                </div>
+
+                <div class="slider-row">
+                    <label for="saturationRange">Насыщенность</label>
+                    <input id="saturationRange" type="range" min="20" max="180" value="100" step="1">
+                    <output id="saturationRangeValue" for="saturationRange">100%</output>
+                </div>
+
+                <div class="actions settings-actions">
+                    <button id="applySettingsButton" class="button primary" type="button">
+                        Применить
+                    </button>
+                    <button id="resetSettingsButton" class="button secondary" type="button">
+                        Вернуть автоподбор
+                    </button>
+                    <button id="downloadButton" class="button dark" type="button">
+                        Скачать изображение
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
